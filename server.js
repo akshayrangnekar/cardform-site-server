@@ -3,7 +3,9 @@ var app = express();
 var port = process.env.PORT || 8081;
 
 var aws = require('knox').createClient({
-    bucket: 'cardform-hosted-sites'
+    key: process.env.AWS_ACCESS_KEY,
+    secret: process.env.AWS_ACCESS_KEY_SECRET,
+    bucket: process.env.BUCKET_NAME
 })
 
 app.get('/:path', function (req, res) {
