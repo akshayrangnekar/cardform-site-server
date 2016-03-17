@@ -25,9 +25,14 @@ var handler = function(req, res, next) {
     if (path.endsWith('/')) path = path + 'index.html';
 
     // res.send('Hello World: ***' + path + '*** <br />Hostname: ' + req.hostname);
+    console.log('Requesting path: ' + path);
     aws.get(path)
-        .on('error', next)
+        .on('error', function(err) {
+            console.log('Error: ', err);
+            next(err);
+        })
         .on('response', function(resp) {
+            console.log('Got response.');
             if (resp.statusCode !== 200) {
                 var err = new Error()
                 err.status = 404
