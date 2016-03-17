@@ -7,5 +7,5 @@ app.get('/', function (req, res) {
 });
 
 app.listen(process.env.PORT, function () {
-  console.log('Example app listening on port: ' + );
+  console.log('Example app listening on port: ' + port);
 });
