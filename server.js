@@ -20,6 +20,7 @@ if (!String.prototype.endsWith) {
 
 var handler = function(req, res, next) {
     var path = req.hostname + req.path;
+    var responded = false;
     if (path.endsWith('/')) path = path + 'index.html';
 
     // res.send('Hello World: ***' + path + '*** <br />Hostname: ' + req.hostname);
@@ -37,8 +38,11 @@ var handler = function(req, res, next) {
         console.log('Download complete.');
     })
     .on('error', function error(err) {
-        console.error('Unable to download file:', err);
-        res.status(404).send('File not found!');
+        if (!responded)  {
+            console.error('Unable to download file:', err);
+            res.status(404).send('File not found!');
+            responded = true;
+        }
     })
     .pipe(res);
 };
