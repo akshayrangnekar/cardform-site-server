@@ -19,7 +19,7 @@ if (!String.prototype.endsWith) {
 }
 
 var handler = function(req, res, next) {
-    var path = '/' + req.hostname + req.path;
+    var path = req.hostname + req.path;
     if (path.endsWith('/')) path = path + 'index.html';
 
     // res.send('Hello World: ***' + path + '*** <br />Hostname: ' + req.hostname);
