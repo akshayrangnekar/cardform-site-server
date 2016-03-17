@@ -20,11 +20,32 @@ var aws = require('knox').createClient({
     bucket: process.env.BUCKET_NAME
 });
 
-var handler = function(req, res) {
-    var path = req.path;
+var handler = function(req, res, next) {
+    var path = '/' + req.hostname + req.path;
     if (path.endsWith('/')) path = path + 'index.html';
-    res.send('Hello World: ***' + path + '*** <br />Hostname: ' + req.hostname);
 
+    // res.send('Hello World: ***' + path + '*** <br />Hostname: ' + req.hostname);
+    aws.get(path)
+        .on('error', next)
+        .on('response', function(resp) {
+            if (resp.statusCode !== 200) {
+                var err = new Error()
+                err.status = 404
+                next(err)
+                return
+            }
+
+            res.setHeader('Content-Length', resp.headers['content-length'])
+            res.setHeader('Content-Type', resp.headers['content-type'])
+
+            if (req.method === 'HEAD') {
+                res.statusCode = 200
+                res.end()
+                return
+            }
+
+            resp.pipe(res)
+        })
 };
 
 app.get('/', handler);
