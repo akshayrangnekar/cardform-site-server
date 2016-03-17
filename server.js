@@ -1,6 +1,7 @@
 var express = require('express');
 var S3 = require('aws-sdk').S3,
     S3S = require('s3-streams');
+var s3O = new S3();
 
 var app = express();
 var port = process.env.PORT || 8081;
@@ -22,9 +23,9 @@ var handler = function(req, res, next) {
     if (path.endsWith('/')) path = path + 'index.html';
 
     // res.send('Hello World: ***' + path + '*** <br />Hostname: ' + req.hostname);
-    console.log('Requesting path: ' + path);
+    console.log('Requesting a path: ' + path);
 
-    var download = S3S.ReadStream(new S3(), {
+    var download = S3S.ReadStream(s3O, {
         Bucket: process.env.BUCKET_NAME,
         Key: path
     });
@@ -32,7 +33,6 @@ var handler = function(req, res, next) {
     download.on('open', function open(object) {
         console.log('Downloading', object.ContentLength, 'bytes.');
     })
-    .pipe(res)
     .on('finish', function end() {
         console.log('Download complete.');
     })
