@@ -38,9 +38,7 @@ var handler = function(req, res, next) {
     })
     .on('error', function error(err) {
         console.error('Unable to download file:', err);
-        var r = new Error();
-        r.status = 404
-        next(r);
+        res.status(404).send('File not found!');
     })
     .pipe(res);
 };
