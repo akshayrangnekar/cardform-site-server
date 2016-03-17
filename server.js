@@ -22,7 +22,8 @@ var aws = require('knox').createClient({
 
 var handler = function(req, res) {
     var path = req.path;
-    res.send('Hello World: ***' + path + '***');
+    if (path.endsWith('/')) path = path + 'index.html';
+    res.send('Hello World: ***' + path + '*** <br />Hostname: ' + req.hostname);
 
 };
 
