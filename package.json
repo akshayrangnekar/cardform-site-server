@@ -1,0 +1,22 @@
+{
+  "name": "cardform-site-server",
+  "version": "1.0.0",
+  "description": "Server for serving pages from S3",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/akshayrangnekar/cardform-site-server.git"
+  },
+  "author": "Akshay Rangnekar",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/akshayrangnekar/cardform-site-server/issues"
+  },
+  "homepage": "https://github.com/akshayrangnekar/cardform-site-server#readme",
+  "dependencies": {
+    "express": "^4.13.4"
+  }
+}
