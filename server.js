@@ -29,7 +29,16 @@ var handler = function(req, res, next) {
         Key: path
     });
 
-    download.pipe(res);
+    download.on('open', function open(object) {
+        console.log('Downloading', object.ContentLength, 'bytes.');
+    })
+    .pipe(res)
+    .on('finish', function end() {
+        console.log('Download complete.');
+    })
+    .on('error', function error(err) {
+        console.error('Unable to download file:', err);
+    });
 };
 
 app.get('/', handler);
