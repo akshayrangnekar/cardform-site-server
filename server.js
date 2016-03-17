@@ -38,7 +38,8 @@ var handler = function(req, res, next) {
     })
     .on('error', function error(err) {
         console.error('Unable to download file:', err);
-    });
+    })
+    .pipe(res);
 };
 
 app.get('/', handler);
