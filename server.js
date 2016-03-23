@@ -19,7 +19,7 @@ if (!String.prototype.endsWith) {
 }
 
 var handler = function(req, res, next) {
-    var path = req.hostname + req.path;
+    var path = req.hostname + decodeURIComponent(req.path);
     var responded = false;
     if (path.endsWith('/')) path = path + 'index.html';
 
